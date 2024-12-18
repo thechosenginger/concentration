@@ -1,4 +1,5 @@
 import { SetStateAction, useState } from "react"
+import Button from '@mui/material/Button'
 
 interface MemoryGridProps {
   buttonText: string;
@@ -24,7 +25,7 @@ const MemoryGrid: React.FC<MemoryGridProps> = ({ buttonText, placeholder}) => {
         onChange={handleInputChange}
         placeholder="placeholder"
         />
-      <button onClick={handleButtonClick}>{buttonText}</button>
+      <Button onClick={handleButtonClick} variant="contained" color="secondary">{buttonText}</Button>
     </div>
   )
 }
