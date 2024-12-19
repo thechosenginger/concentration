@@ -1,9 +1,7 @@
-// Uncomment this line to use CSS modules
-// import styles from './app.module.scss';
-import NxWelcome from './nx-welcome';
-import { Header, MemoryGrid } from './components';
 import { useState } from 'react';
+import { Header } from './components';
 import { Button } from '@mui/material';
+import { AppContainer, CardGrid, Card } from './app.styles';
 
 const cardImages = [
   { src: '../assets/images/common/Christmas/Santa/Santa_1.png' },
@@ -44,7 +42,7 @@ export function App() {
   console.log(cards, turns);
 
   return (
-    <div>
+    <AppContainer>
       {/* <NxWelcome title="ui" /> */}
       <Header />
       {/* <MemoryGrid buttonText="Memory Grid" placeholder="Memory Button" /> */}
@@ -52,9 +50,9 @@ export function App() {
         New Game
       </Button>
 
-      <div className="card-grid">
+      <CardGrid>
         {cards.map((card) => (
-          <div className="card" key={card.id}>
+          <Card key={card.id}>
             <div>
               <img className="front" src={card.src} alt="card front" />
               <img
@@ -63,10 +61,10 @@ export function App() {
                 alt="card back"
               />
             </div>
-          </div>
+          </Card>
         ))}
-      </div>
-    </div>
+      </CardGrid>
+    </AppContainer>
   );
 }
 
