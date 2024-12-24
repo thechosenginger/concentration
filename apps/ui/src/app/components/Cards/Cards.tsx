@@ -8,6 +8,7 @@ export interface ICard {
   id: number;
   img: string;
   status: string;
+  number: number;
 }
 
 // TODO: When the user selects 2 correct images, remove the img and background
@@ -68,7 +69,12 @@ export default function Cards() {
   const shuffleCards = () => {
     const shuffledCards = [...cardImages, ...cardImages]
       .sort(() => Math.random() - 0.5)
-      .map((card) => ({ ...card, id: Math.random() }));
+      .map((card, index) => ({
+        ...card,
+        id: Math.random(),
+        number: index + 1,
+        status: 'hidden',
+      }));
 
     setCards(shuffledCards);
   };

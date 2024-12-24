@@ -19,7 +19,6 @@ export const AppContainer = styled.div`
   .card {
     background-color: rgb(0, 140, 255);
     border-radius: 5px;
-
     animation: 2s hideCard linear;
   }
   img {
@@ -28,11 +27,18 @@ export const AppContainer = styled.div`
     border-radius: 5px;
     /* transform: scale(0); */
     opacity: 0;
-    animation: 2s hideImage linear;
+    animation: 1.5s hideImage linear;
   }
 
   .card.active {
     transform: rotateY(0);
+  }
+
+  .card-number {
+    top: 10px;
+    left: 10px;
+    font-size: 1.2rem;
+    font-weight: bold;
   }
 
   .card.active img {
