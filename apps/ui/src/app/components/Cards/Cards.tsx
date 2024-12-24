@@ -1,0 +1,99 @@
+import { useState, useEffect, useRef } from 'react';
+import { Button } from '@mui/material';
+import Card from './Card/Card';
+
+import { cardImages } from './CardImages';
+
+export interface ICard {
+  id: number;
+  img: string;
+  status: string;
+}
+
+// TODO: When the user selects 2 correct images, remove the img and background
+
+export default function Cards() {
+  const [cards, setCards] = useState<ICard[]>([]);
+  const [previousCardState, setPreviousCardState] = useState<number>(-1);
+
+  const previousIndex = useRef(-1);
+
+  const matchCheck = (currentCard: number) => {
+    if (cards[currentCard].img === cards[previousCardState].img) {
+      // Update matched cards' status to "matched"
+      cards[previousCardState].status = 'active matched';
+      cards[currentCard].status = 'active matched';
+
+      // Remove matched cards after 2 seconds
+      setTimeout(() => {
+        cards[previousCardState].status = 'removed';
+        cards[currentCard].status = 'removed';
+        setCards([...cards]);
+      }, 2000);
+      setPreviousCardState(-1);
+    } else {
+      // Mark cards as "unmatched after a short delay"
+      cards[currentCard].status = 'active';
+      setCards([...cards]);
+      setTimeout(() => {
+        setPreviousCardState(-1);
+        cards[currentCard].status = 'unmatch';
+        cards[previousCardState].status = 'unmatch';
+      }, 1000);
+    }
+  };
+
+  const clickHandler = (index: number) => {
+    if (index !== previousIndex.current) {
+      if (cards[index].status === 'active matched') {
+        alert('already matched');
+      } else {
+        if (previousCardState === -1) {
+          // First card selection
+          previousIndex.current = index;
+          cards[index].status = 'active';
+          setCards([...cards]);
+          setPreviousCardState(index);
+        } else {
+          // Second card selection
+          matchCheck(index);
+          previousIndex.current = -1;
+        }
+      }
+    } else {
+      alert('card currently selected');
+    }
+  };
+
+  const shuffleCards = () => {
+    const shuffledCards = [...cardImages, ...cardImages]
+      .sort(() => Math.random() - 0.5)
+      .map((card) => ({ ...card, id: Math.random() }));
+
+    setCards(shuffledCards);
+  };
+
+  useEffect(() => {
+    shuffleCards();
+  }, []);
+
+  return (
+    <>
+      <Button onClick={shuffleCards} variant="contained" color="primary">
+        New Game
+      </Button>
+      <div className="container">
+        {cards.map((card, index) => {
+          return (
+            <Card
+              card={card}
+              key={index}
+              index={index}
+              clickHandler={clickHandler}
+            />
+          );
+        })}
+      </div>
+    </>
+  );
+}
