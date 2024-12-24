@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Button } from '@mui/material';
 import Card from './Card/Card';
+import Popup from '../Popup/Popup';
 
 import { cardImages } from './CardImages';
 
@@ -11,11 +12,20 @@ export interface ICard {
   number: number;
 }
 
-// TODO: When the user selects 2 correct images, remove the img and background
-
 export default function Cards() {
   const [cards, setCards] = useState<ICard[]>([]);
   const [previousCardState, setPreviousCardState] = useState<number>(-1);
+  const [showPopup, setShowPopup] = useState<boolean>(false);
+  const [prize, setPrize] = useState<string | null>(null);
+
+  const prizes = ['Gift Card', 'Cash', 'Gift', 'Lotto Ticket'];
+
+  const handleWin = () => {
+    // Ramdomly select a prize
+    const randomPrize = prizes[Math.floor(Math.random() * prizes.length)];
+    setPrize(randomPrize);
+    handleOpenPopup();
+  };
 
   const previousIndex = useRef(-1);
 
@@ -27,6 +37,8 @@ export default function Cards() {
 
       // Remove matched cards after 2 seconds
       setTimeout(() => {
+        // alert('You have found a match!. Your prize is a ____!!!');
+        handleWin();
         cards[previousCardState].status = 'removed';
         cards[currentCard].status = 'removed';
         setCards([...cards]);
@@ -83,11 +95,17 @@ export default function Cards() {
     shuffleCards();
   }, []);
 
+  const handleOpenPopup = () => setShowPopup(true);
+  const handleClosePopup = () => setShowPopup(false);
+
+  const prizeList = {};
+
   return (
     <>
       <Button onClick={shuffleCards} variant="contained" color="primary">
         New Game
       </Button>
+      {showPopup && prize && <Popup prize={prize} onClose={handleClosePopup} />}
       <div className="container">
         {cards.map((card, index) => {
           return (

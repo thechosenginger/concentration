@@ -16,3 +16,5 @@ export function App() {
 }
 
 export default App;
+
+// Next, need to add the rebus backimage and the text box to submit a guess
