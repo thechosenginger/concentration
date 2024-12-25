@@ -1,25 +1,46 @@
 import styled from 'styled-components';
 
-export const AppContainer = styled.div`
+interface AppContainerProps {
+  backgroundImage: string;
+}
+
+export const AppContainer = styled.div<AppContainerProps>`
   text-align: center;
   .container {
     position: relative;
     margin: auto;
     width: 600px;
-    height: 700%;
-    max-width: 30rem;
-    height: 30rem;
+    height: 700px; /* Fixed the incorrect percentage */
+    max-width: 100%; /* Ensure it scales for smaller screens */
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     gap: 0.1rem;
     justify-content: center;
-    background-image: url('/assets/images/common/Christmas/Christmas_Back.png');
+
+    /* Background settings */
+    background-image: url(${(props) => props.backgroundImage});
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    width: 100%;
-    height: 100%;
   }
+  // .container {
+  //   position: relative;
+  //   margin: auto;
+  //   width: 600px;
+  //   height: 700%;
+  //   max-width: 30rem;
+  //   height: 30rem;
+  //   display: grid;
+  //   grid-template-columns: repeat(6, 1fr);
+  //   gap: 0.1rem;
+  //   justify-content: center;
+  //   background-image: url(${(props) => props.backgroundImage});
+  //   background-size: cover;
+  //   background-position: center;
+  //   background-repeat: no-repeat;
+  //   width: 100%;
+  //   height: 100%;
+  // }
 
   .card {
     position: relative;
@@ -40,7 +61,7 @@ export const AppContainer = styled.div`
     border-radius: 5px;
     /* transform: scale(0); */
     opacity: 0;
-    animation: 1.5s hideImage linear;
+    // animation: 1.5s hideImage linear;
   }
 
   .card.active {
