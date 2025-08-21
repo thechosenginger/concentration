@@ -7,11 +7,16 @@ module.exports = {
     path: join(__dirname, '../../dist/apps/ui'),
   },
   devServer: {
-    port: 4200,
+    port: 3000,
     historyApiFallback: {
       index: '/index.html',
       disableDotRule: true,
       htmlAcceptHeaders: ['text/html', 'application/xhtml+xml'],
+    },
+  },
+  resolve: {
+    alias: {
+      '@mui/styled-engine': '@mui/styled-engine-sc',
     },
   },
   plugins: [
