@@ -36,7 +36,7 @@ export function App() {
   };
 
   return (
-    <AppContainer backgroundImage={backgroundImage}>
+    <AppContainer $backgroundImage={backgroundImage}>
       {/* <NxWelcome title="ui" /> */}
       <Header />
       {/* <MemoryGrid buttonText="Memory Grid" placeholder="Memory Button" /> */}

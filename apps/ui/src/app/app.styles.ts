@@ -1,9 +1,33 @@
 import styled from 'styled-components';
 
 interface AppContainerProps {
-  backgroundImage: string;
+  $backgroundImage: string;
 }
 
+/**
+ * AppContainer is a styled <div> wrapper for the app layout.
+ *
+ * ⚠️ Important:
+ * React does not allow unknown props (like `backgroundImage`)
+ * to be passed directly onto DOM elements. If we used:
+ *
+ *   <AppContainer backgroundImage="..." />
+ *
+ * React would try to render it as:
+ *
+ *   <div backgroundImage="..."></div>
+ *
+ * which is invalid HTML and triggers the warning:
+ * "React does not recognize the `backgroundImage` prop on a DOM element."
+ *
+ * ✅ To fix this, we use a "transient prop" in styled-components
+ * (prefixing the prop with `$`, e.g. `$backgroundImage`).
+ * Transient props are consumed only inside styled-components
+ * and are not forwarded to the DOM, so the warning goes away.
+ *
+ * Usage:
+ *   <AppContainer $backgroundImage="/path/to/image.png" />
+ */
 export const AppContainer = styled.div<AppContainerProps>`
   text-align: center;
   .container {
@@ -18,7 +42,7 @@ export const AppContainer = styled.div<AppContainerProps>`
     justify-content: center;
 
     /* Background settings */
-    background-image: url(${(props) => props.backgroundImage});
+    background-image: url(${(props) => props.$backgroundImage});
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -34,7 +58,7 @@ export const AppContainer = styled.div<AppContainerProps>`
   //   grid-template-columns: repeat(6, 1fr);
   //   gap: 0.1rem;
   //   justify-content: center;
-  //   background-image: url(${(props) => props.backgroundImage});
+  //   background-image: url(${(props) => props.$backgroundImage});
   //   background-size: cover;
   //   background-position: center;
   //   background-repeat: no-repeat;
