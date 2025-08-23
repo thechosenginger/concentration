@@ -4,6 +4,7 @@
     "allowJs": false,
     "esModuleInterop": false,
     "allowSyntheticDefaultImports": true,
+    "types": ["jest", "@types/node", "@testing-library/jest-dom"],
     "strict": true
   },
   "files": [],
